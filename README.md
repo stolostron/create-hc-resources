@@ -9,23 +9,18 @@ https://hypershift-docs.netlify.app/how-to/create-infra-iam-separately/
 #### Lambda
 Implemented as a GO Lambda function - The code is located in the `/hc-resources-lambda` folder. This function internally calls functions from hypershift's `github.com/openshift/hypershift/cmd/infra/aws` package to create the Infra and IAM resources in AWS.
 
-#### CDK deployment
-The code for the CDK stack to deploy the custom resource and lambda is located in the `/hc-resources-cdk` folder
+This lambda is meant to work with a handwritten CF template `samples/lambda-cr-cfn.template`. The lambda function implements the cfn-response module to construct the responses accordingly to work with the CF template.
 
-Specify parameters during deployment of the stack:
+#### CF Template
 
-```bash
-REGION=<value> \ # Region where cluster infra should be created
-INFRA_ID=<value> \ # Infrastructure ID to use for AWS resources
-CLUSTER_NAME=<value> \ # A name for the hosted cluster
-AWS_ACCESS_KEY_ID=<value> \ # AWS Access Key ID for account to create resources in
-AWS_SECRET_KEY=<value> \ # AWS Secret Key for account to create resources in
-BASE_DOMAIN=<value> \ # The ingress base domain for the cluster
-OIDC_BUCKET_NAME=<value> \ # The name of the bucket in which the OIDC discovery document is stored
-OIDC_BUCKET_REGION=<value> \ # The region of the bucket in which the OIDC discovery document is stored
-cdk deploy
+See `samples/lambda-cr-cfn.template`.
 
-```
+To deploy a stack:
+1. Prepare the deployment package for the lambda.
+    - [Create a zip file](https://docs.aws.amazon.com/lambda/latest/dg/golang-package.html#golang-package-mac-linux) for the golang executable.
+    - [Upload the zipfile](https://s3.console.aws.amazon.com/s3/upload/vnambiar-hypershift?region=us-east-1) to an S3 bucket.
+2. In the CF template `samples/lambda-cr-cfn.template`, update the values for the name of the S3 bucket and zipfile holding the lambda deployment package from step 1.
+3. On the AWS CloudFormation page, create a new stack using the CF template from the previous step providing values for the parameters.
 
 #### Output:
 ```
