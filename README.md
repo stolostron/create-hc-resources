@@ -15,7 +15,7 @@ This lambda is meant to work with a handwritten CF template `samples/lambda-cr-c
 
 See `samples/lambda-cr-cfn.template`.
 
-To deploy a stack:
+#### To deploy a stack:
 1. Prepare the deployment package for the lambda.
     - [Create a zip file](https://docs.aws.amazon.com/lambda/latest/dg/golang-package.html#golang-package-mac-linux) for the golang executable.
     - [Upload the zipfile](https://s3.console.aws.amazon.com/s3/upload/vnambiar-hypershift?region=us-east-1) to an S3 bucket.
