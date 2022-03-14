@@ -19,7 +19,7 @@ To deploy a stack:
 1. Prepare the deployment package for the lambda.
     - [Create a zip file](https://docs.aws.amazon.com/lambda/latest/dg/golang-package.html#golang-package-mac-linux) for the golang executable.
     - [Upload the zipfile](https://s3.console.aws.amazon.com/s3/upload/vnambiar-hypershift?region=us-east-1) to an S3 bucket.
-2. In the CF template `samples/lambda-cr-cfn.template`, update the values for the name of the S3 bucket and zipfile holding the lambda deployment package from step 1.
+2. In the CF template `samples/lambda-cr-cfn.template`, update the values for the name of the [S3 bucket and zipfile](https://github.com/stolostron/create-hc-resources/blob/lambda-cfn-response/samples/lambda-cr-cfn.template#L57-L58) holding the lambda deployment package from step 1.
 3. On the AWS CloudFormation page, create a new stack using the CF template from the previous step providing values for the parameters.
 
 #### Output:
